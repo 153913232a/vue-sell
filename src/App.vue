@@ -1,26 +1,35 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header :seller="seller" ref="header"></Header>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/v-header/header'
+import { getSeller } from 'api'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Header
+  },
+  data () {
+    return {
+      seller: {}
+    }
+  },
+  methods: {
+    _getSeller () {
+      getSeller().then((seller) => {
+        this.seller = seller
+      })
+    }
+  },
+  mounted () {
+    this._getSeller()
+    this.$refs.header.test()
   }
 }
 </script>
 <style lang="stylus">
-#app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
 </style>
